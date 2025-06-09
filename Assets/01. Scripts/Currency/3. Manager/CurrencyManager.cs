@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,7 +10,9 @@ public class CurrencyManager : MonoBehaviour
     public static CurrencyManager Instance;
 
     private Dictionary<ECurrencyType, Currency> _currencies;
-    public Dictionary<ECurrencyType, Currency> Currencies => _currencies;
+    // public Dictionary<ECurrencyType, Currency> Currencies => _currencies;
+
+    public event Action OnDataChanged;
 
     private void Awake()
     {
@@ -40,15 +43,24 @@ public class CurrencyManager : MonoBehaviour
         }
     }
 
+    public CurrencyDTO Get(ECurrencyType type)
+    {
+        return new CurrencyDTO(_currencies[type]);
+    }
+
     public void Add(ECurrencyType type, int value)
     {
         _currencies[type].Add(value);
 
-        Debug.Log($"{type} : {_currencies[type].Value}");
+        OnDataChanged?.Invoke();
     }
 
     public void Subtract(ECurrencyType type, int value)
     {
         _currencies[type].Subtract(value);
+
+        OnDataChanged?.Invoke();
     }
+
+
 }
