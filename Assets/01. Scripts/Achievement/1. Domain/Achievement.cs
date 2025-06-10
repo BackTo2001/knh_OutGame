@@ -28,7 +28,7 @@ public class Achievement
     public bool RewardClaimed => _rewardClaimed;
 
     // 생성자
-    public Achievement(AchievementSO metaData)
+    public Achievement(AchievementSO metaData, AchievementSaveData saveData)
     {
         if (string.IsNullOrEmpty(metaData.ID))
         {
@@ -50,6 +50,10 @@ public class Achievement
         {
             throw new System.Exception("업적 보상 금액은 0보다 커야 합니다.");
         }
+        if (saveData.CurrentValue < 0)
+        {
+            throw new System.Exception("업적 진행 값은 0보다 커야 합니다.");
+        }
 
         ID = metaData.ID;
         Name = metaData.Name;
@@ -58,6 +62,9 @@ public class Achievement
         GoalValue = metaData.GoalValue;
         RewardCurrencyType = metaData.RewardCurrencyType;
         RewardAmount = metaData.RewardAmount;
+
+        _currentValue = saveData.CurrentValue;
+        _rewardClaimed = saveData.RewardClaimed;
     }
 
     public void Increase(int value)

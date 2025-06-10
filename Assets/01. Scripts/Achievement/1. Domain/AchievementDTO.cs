@@ -9,14 +9,10 @@ public class AchievementDTO
     public string Description;
     public EAchievementCondition Condition;
     public int GoalValue;
-    public ECurrencyType RewardCurrencyType;
-    public int RewardAmount;
-
-    // 상태 데이터
     public int CurrentValue;
     public bool RewardClaimed;
-
-    public AchievementDTO() { }
+    public ECurrencyType RewardCurrencyType;
+    public int RewardAmount;
 
     public AchievementDTO(Achievement achievement)
     {
@@ -25,11 +21,10 @@ public class AchievementDTO
         Description = achievement.Description;
         Condition = achievement.Condition;
         GoalValue = achievement.GoalValue;
-        RewardCurrencyType = achievement.RewardCurrencyType;
-        RewardAmount = achievement.RewardAmount;
-
         CurrentValue = achievement.CurrentValue;
         RewardClaimed = achievement.RewardClaimed;
+        RewardCurrencyType = achievement.RewardCurrencyType;
+        RewardAmount = achievement.RewardAmount;
     }
 
     public bool CanClaimReward()
