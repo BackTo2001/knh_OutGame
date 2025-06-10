@@ -2,6 +2,7 @@
 using Unity.FPS.Gameplay;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms;
 using UnityEngine.UI;
 
 namespace Unity.FPS.UI
@@ -11,7 +12,8 @@ namespace Unity.FPS.UI
         [Tooltip("Root GameObject of the menu used to toggle its activation")]
         public GameObject MenuRoot;
 
-        [Tooltip("Master volume when menu is open")] [Range(0.001f, 1f)]
+        [Tooltip("Master volume when menu is open")]
+        [Range(0.001f, 1f)]
         public float VolumeWhenMenuOpen = 0.5f;
 
         [Tooltip("Slider component for look sensitivity")]
@@ -28,6 +30,8 @@ namespace Unity.FPS.UI
 
         [Tooltip("GameObject for the controls")]
         public GameObject ControlImage;
+
+        public GameObject UI_Achievement;
 
         PlayerInputHandler m_PlayerInputsHandler;
         Health m_PlayerHealth;
@@ -149,6 +153,15 @@ namespace Unity.FPS.UI
         public void OnShowControlButtonClicked(bool show)
         {
             ControlImage.SetActive(show);
+        }
+        public void OnShowAchievementButtonClicked(bool show)
+        {
+            UI_Achievement.SetActive(show);
+        }
+
+        public void OnCloseAchievementButtonClicked()
+        {
+            UI_Achievement.SetActive(false);
         }
     }
 }

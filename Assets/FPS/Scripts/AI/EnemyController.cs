@@ -384,6 +384,7 @@ namespace Unity.FPS.AI
             }
 
             CurrencyManager.Instance.Add(ECurrencyType.Gold, 100);
+            AchievementManager.Instance.Increase(EAchievementCondition.DroneKillCount, 1);
 
             // this will call the OnDestroy function
             Destroy(gameObject, DeathDuration);

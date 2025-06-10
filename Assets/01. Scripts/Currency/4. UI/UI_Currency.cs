@@ -7,6 +7,7 @@ public class UI_Currency : MonoBehaviour
 {
     public TextMeshProUGUI GoldCountText;
     public TextMeshProUGUI DiamondCountText;
+    public TextMeshProUGUI BuyHealthText;
 
     private void Start()
     {
@@ -17,8 +18,13 @@ public class UI_Currency : MonoBehaviour
 
     private void Refresh()
     {
-        GoldCountText.text = $"Gold: {CurrencyManager.Instance.Get(ECurrencyType.Gold).Value}";
-        DiamondCountText.text = $"Diamond: {CurrencyManager.Instance.Get(ECurrencyType.Diamond).Value}";
+        var gold = CurrencyManager.Instance.Get(ECurrencyType.Gold);
+        var diamond = CurrencyManager.Instance.Get(ECurrencyType.Diamond);
+
+        GoldCountText.text = $"Gold: {gold.Value}";
+        DiamondCountText.text = $"Diamond: {diamond.Value}";
+
+        BuyHealthText.color = gold.HaveEnough(300) ? Color.green : Color.red;
     }
 
     private void Update()
@@ -31,19 +37,18 @@ public class UI_Currency : MonoBehaviour
 
     public void BuyHealth()
     {
-        // 디미터 법칙 : 묻지 말고 시켜라
-        // 현재 문제
-        // 1. 도메인의 규칙이 UI에 노출되어 있다.
-        // 2. 규칙이 바뀌면 UI까지 와서 수정해야한다.
-        // 3. '사다'라는 행위는 '커렌시 도메인'의 중요한 역할
-        // 4. '사다'라는 행위는 상점 등 다양한 곳에서 쓰일텐데.. 그때마다 로직을 ?
-        if (CurrencyManager.Instance.Get(ECurrencyType.Gold).Value >= 300)
+        if (CurrencyManager.Instance.TryBuy(ECurrencyType.Gold, 300))
         {
-            CurrencyManager.Instance.Subtract(ECurrencyType.Gold, 300);
-
             var player = GameObject.FindFirstObjectByType<PlayerCharacterController>();
             Health playerHealth = player.GetComponent<Health>();
             playerHealth.Heal(100);
+
+            // 성공 파티클 추가
+        }
+        else
+        {
+            // 알림 추가
+            // 토스트 메시지 추가
         }
     }
 }

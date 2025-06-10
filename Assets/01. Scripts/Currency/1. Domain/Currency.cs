@@ -48,16 +48,20 @@ public class Currency : MonoBehaviour
         _value += addedValue;
     }
 
-    public void Subtract(int subtractedValue)
+
+    public bool TryBuy(int value)
     {
-        if (subtractedValue < 0)
+        if (value < 0)
         {
-            throw new Exception("감소 값은 음수가 될 수 없습니다.");
+            throw new Exception("구매하려는 금액은 0 이상이어야 합니다.");
         }
-        if (_value < subtractedValue)
+        if (_value < value)
         {
-            throw new Exception("보유 화폐가 부족합니다.");
+            return false;
         }
-        _value -= subtractedValue;
+
+        _value -= value; // 샀다
+
+        return true;  // 샀다 성공
     }
 }

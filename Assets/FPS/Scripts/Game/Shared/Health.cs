@@ -80,17 +80,21 @@ namespace Unity.FPS.Game
                 m_IsDead = true;
                 OnDie?.Invoke();
 
-                // 풀로 복귀 처리
+                if (CompareTag("Player"))
+                {
+                    return;
+                }
+
                 if (UsePooling && ObjectPoolManager.Instance != null)
                 {
-                    // 애니메이션 등을 고려해서 약간의 딜레이 주고 싶다면 Invoke나 코루틴 사용
                     ObjectPoolManager.Instance.ReturnToPool(PoolType, gameObject);
                 }
                 else
                 {
-                    Destroy(gameObject); // 풀링 사용 안 할 경우 Destroy
+                    Destroy(gameObject); // 적은 Destroy
                 }
             }
         }
+
     }
 }

@@ -11,4 +11,15 @@ public class CurrencyDTO : MonoBehaviour
         Type = currency.Type;
         Value = currency.Value;
     }
+
+    public CurrencyDTO(ECurrencyType type, int value)
+    {
+        Type = type;
+        Value = value;
+    }
+
+    public bool HaveEnough(int value)
+    {
+        return Value >= value;
+    }
 }
