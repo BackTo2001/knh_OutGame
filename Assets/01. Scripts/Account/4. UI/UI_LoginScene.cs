@@ -28,7 +28,7 @@ public class UI_LoginScene : MonoBehaviour
     public UI_InputFields RegisterInputFields;
 
     private const string PREFIX = "ID_";
-    private const string SALT = "10043420";
+    private const string SALT = "20250611";
 
 
 
