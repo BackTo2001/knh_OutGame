@@ -18,6 +18,8 @@ public class CurrencyManager : MonoBehaviour
 
     private CurrencyRepository _repository;
 
+    private string _currentUserId => AccountManager.Instance?.CurrentAccount?.Email;
+
     // 로버트 C.마틴 : 미리하는 최적화의 90%는 쓸모없다. 
     // public event Action OnGoldDataChanged;
     // public event Action OnDiamondDataChanged;
@@ -45,7 +47,7 @@ public class CurrencyManager : MonoBehaviour
         // 레포지토리(깃허브)
         _repository = new CurrencyRepository();
 
-        List<CurrencyDTO> loadedCurrencies = _repository.Load();
+        List<CurrencyDTO> loadedCurrencies = _repository.Load(_currentUserId);
         if (loadedCurrencies == null)
         {
             for (int i = 0; i < (int)ECurrencyType.Count; ++i)
@@ -82,7 +84,8 @@ public class CurrencyManager : MonoBehaviour
     {
         _currencies[type].Add(value);
 
-        _repository.Save(ToDTOList());
+        if (!string.IsNullOrEmpty(_currentUserId))
+            _repository.Save(ToDTOList(), _currentUserId);
 
         AchievementManager.Instance.Increase(EAchievementCondition.GoldCollect, value);
 
@@ -96,7 +99,8 @@ public class CurrencyManager : MonoBehaviour
             return false;
         }
 
-        _repository.Save(ToDTOList());
+        if (!string.IsNullOrEmpty(_currentUserId))
+            _repository.Save(ToDTOList(), _currentUserId);
 
         OnDataChanged?.Invoke();
 

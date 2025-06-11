@@ -6,7 +6,6 @@ public class AchievementManager : MonoBehaviour
 {
     public static AchievementManager Instance;
 
-
     [SerializeField]
     private List<AchievementSO> _metaDatas;
 
