@@ -35,6 +35,7 @@ public class AccountManager : MonoBehaviour
     public Result TryRegister(string email, string nickname, string password)
     {
         AccountSaveData saveData = _repository.Find(email);
+
         if (saveData != null)
         {
             return new Result(false, "이미 가입한 이메일입니다.");
