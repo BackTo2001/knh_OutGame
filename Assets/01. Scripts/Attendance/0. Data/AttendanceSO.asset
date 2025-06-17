@@ -12,5 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e7ea115ced12e948904c3c0f4f252a1, type: 3}
   m_Name: AttendanceSO
   m_EditorClassIdentifier: 
+  _id: 3day
   _startDate: 2025-06-01
-  _attendanceRewards: []
+  _attendanceRewards:
+  - {fileID: 11400000, guid: 4779d5fb70537e2429cb96b7c2880fb8, type: 2}
+  - {fileID: 11400000, guid: 814fb34ae9255fa458464a44576c543d, type: 2}
+  - {fileID: 11400000, guid: 5f36562ab23690647bbef37ac9f3d758, type: 2}

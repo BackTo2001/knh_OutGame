@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: AttendanceRewardSO 3
   m_EditorClassIdentifier: 
   _currencyType: 0
-  _amount: 0
+  _amount: 500

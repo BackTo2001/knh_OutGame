@@ -76,6 +76,7 @@ public class AttendanceManager : MonoBehaviour
     }
 
     public bool TryRewardClaim(string attendanceId, int index)
+
     {
         Attendance attendance = FindById(attendanceId);
         if (attendance == null)
