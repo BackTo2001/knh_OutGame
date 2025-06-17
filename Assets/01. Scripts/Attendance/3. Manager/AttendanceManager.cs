@@ -75,27 +75,27 @@ public class AttendanceManager : MonoBehaviour
         return attendance.ToDTO();
     }
 
-    public bool TryRewardClaim(string attendanceId, int index)
+    //public bool TryRewardClaim(string attendanceId, int index)
 
-    {
-        Attendance attendance = FindById(attendanceId);
-        if (attendance == null)
-        {
-            return false;
-        }
+    //{
+    //    Attendance attendance = FindById(attendanceId);
+    //    if (attendance == null)
+    //    {
+    //        return false;
+    //    }
 
-        if (attendance.TryClaim(index))
-        {
-            AttendanceRewardDTO reward = attendance.GetReward(index);
+    //    if (attendance.TryClaim(index))
+    //    {
+    //        AttendanceRewardDTO reward = attendance.GetReward(index);
 
-            return true;
+    //        return true;
 
-            CurrencyManager.Instance.Add(reward.CurrencyType, reward.Amount);
+    //        CurrencyManager.Instance.Add(reward.CurrencyType, reward.Amount);
 
-            OnDataChanged?.Invoke();
+    //        OnDataChanged?.Invoke();
 
-        }
-    }
+    //    }
+    //}
 
     private IEnumerator Check_Coroutine()
     {

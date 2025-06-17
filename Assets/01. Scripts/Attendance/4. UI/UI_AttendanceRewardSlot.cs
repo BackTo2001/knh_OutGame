@@ -25,6 +25,6 @@ public class UI_AttendanceRewardSlot : MonoBehaviour
     public void TryRewardClaim()
     {
         // 어떤(ID) 출석의 몇 번째 보상을 Claim할지
-        AttendanceManager.Instance.TryRewardClaim(_attendanceID, _attendanceRewardIndex);
+        //AttendanceManager.Instance.TryRewardClaim(_attendanceID, _attendanceRewardIndex);
     }
 }
