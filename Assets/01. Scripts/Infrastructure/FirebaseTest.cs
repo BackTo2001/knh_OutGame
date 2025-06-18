@@ -1,12 +1,17 @@
 using Firebase;
 using Firebase.Auth;
 using Firebase.Extensions;
+using Firebase.Firestore;
+using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class FirebaseTest : MonoBehaviour
 {
     private FirebaseApp _app;
-    private Firebase.Auth.FirebaseAuth _auth;
+    private FirebaseAuth _auth;
+    private FirebaseFirestore _db;
+
 
     void Start()
     {
@@ -23,6 +28,7 @@ public class FirebaseTest : MonoBehaviour
                 Debug.Log("파이어베이스 연결 성공");
                 _app = Firebase.FirebaseApp.DefaultInstance;
                 _auth = FirebaseAuth.DefaultInstance;
+                _db = FirebaseFirestore.DefaultInstance;
 
                 //TryRegister();
                 Login();
@@ -70,9 +76,11 @@ public class FirebaseTest : MonoBehaviour
             Firebase.Auth.AuthResult result = task.Result;
             Debug.LogFormat("로그인 성공 : {0} ({1})",
                 result.User.DisplayName, result.User.UserId);
-
-            ProfileChange();
         });
+
+        ProfileChange();
+        AddMyRanking();
+        GetMyRanking();
     }
 
     private void ProfileChange()
@@ -96,6 +104,7 @@ public class FirebaseTest : MonoBehaviour
 
             Debug.Log("닉네임 변경 성공~!");
         });
+
     }
 
     private void GetProfile()
@@ -108,4 +117,51 @@ public class FirebaseTest : MonoBehaviour
 
         Account account = new Account(email, nickname, "firebase");
     }
+
+    private void AddMyRanking()
+    {
+        Ranking ranking = new Ranking("tetete@gmail.com", "xoxo", 2400);
+
+        Dictionary<string, object> rankingDict = new Dictionary<string, object>
+        {
+            { "Email", ranking.Email},
+            { "Nickname", ranking.Nickname },
+            { "Score", ranking.Score },
+        };
+        _db.Collection("rankings").Document(ranking.Email).SetAsync(rankingDict).ContinueWithOnMainThread(task =>
+        {
+            if (task.IsCanceled || task.IsFaulted)
+            {
+                Debug.LogError($" 랭킹 등록 실패: {task.Exception.Message}");
+                return;
+            }
+
+            Debug.Log("랭킹 등록 성공");
+        });
+    }
+
+    private void GetMyRanking()
+    {
+        var email = "tetete@gmail.com";
+
+        var docRef = _db.Collection("rankings").Document(email);
+        docRef.GetSnapshotAsync().ContinueWithOnMainThread(task =>
+        {
+            DocumentSnapshot snapshot = task.Result;
+            if (snapshot.Exists)
+            {
+                Debug.Log(String.Format("Document data for {0} document:", snapshot.Id));
+                Dictionary<string, object> city = snapshot.ToDictionary();
+                foreach (KeyValuePair<string, object> pair in city)
+                {
+                    Debug.Log(String.Format("{0}: {1}", pair.Key, pair.Value));
+                }
+            }
+            else
+            {
+                Debug.Log(String.Format("Document {0} does not exist!", snapshot.Id));
+            }
+        });
+    }
+
 }
