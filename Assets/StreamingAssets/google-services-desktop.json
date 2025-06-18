@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1079813080328",
+    "project_id": "hellofirebase-cc96f",
+    "storage_bucket": "hellofirebase-cc96f.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1079813080328:android:69032cd720ca7f21ec18bd",
+        "android_client_info": {
+          "package_name": "com.skku.outgame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAzGZFCbi6vWYnHXgrgVp9CTSNBgqurUuM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
