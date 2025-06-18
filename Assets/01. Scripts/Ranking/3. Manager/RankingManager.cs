@@ -2,11 +2,16 @@ using System;
 using System.Collections.Generic;
 
 
+
 public class RankingManager : MonoBehaviourSingleton<RankingManager>
 {
     private RankingRepository _repository;
     private List<Ranking> _rankings;
+    public List<RankingDTO> Rankings => _rankings.ConvertAll(r => r.ToDTO());
+
     private Ranking _myRanking;
+
+    public RankingDTO MyRanking => _myRanking.ToDTO();
 
     public event Action OnDataChanged;
 
@@ -50,11 +55,22 @@ public class RankingManager : MonoBehaviourSingleton<RankingManager>
 
     private void Sort()
     {
-        _rankings.Sort((r1, r2) => r1.Score.CompareTo(r2));
+        _rankings.Sort((r1, r2) => r2.Score.CompareTo(r1));
 
         for (int i = 0; i < _rankings.Count; i++)
         {
             _rankings[i].SetRank(i + 1);
         }
+    }
+
+    public void AddScore(int score)
+    {
+        _myRanking.AddScore(score);
+
+        Sort();
+
+        // Save
+
+        OnDataChanged?.Invoke();
     }
 }
